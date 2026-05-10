@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Manager - Simpan Apapun Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">📋 ClipVault</h1>
+                <p class="tagline">Simpan link, gambar & file dalam satu tempat</p>
+            </div>
+            <div class="header-controls">
+                <button id="syncBtn" class="btn btn-secondary" title="Sinkronisasi dengan server">
+                    ↻ Sinkronisasi
+                </button>
+                <button id="settingsBtn" class="btn btn-secondary" title="Pengaturan">
+                    ⚙️ Pengaturan
+                </button>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-group">
+                    <textarea 
+                        id="inputArea" 
+                        class="input-textarea" 
+                        placeholder="Paste link, teks, atau deskripsi file di sini..."
+                        rows="4"></textarea>
+                    <div class="input-actions">
+                        <input 
+                            type="file" 
+                            id="fileInput" 
+                            multiple 
+                            style="display: none;">
+                        <button id="uploadBtn" class="btn btn-primary">
+                            📎 Pilih File
+                        </button>
+                        <button id="pasteBtn" class="btn btn-primary">
+                            📌 Paste dari Clipboard
+                        </button>
+                        <button id="saveBtn" class="btn btn-success">
+                            💾 Simpan
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filter-section">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="Cari item...">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Semua</button>
+                    <button class="filter-tab" data-filter="text">📝 Teks</button>
+                    <button class="filter-tab" data-filter="link">🔗 Link</button>
+                    <button class="filter-tab" data-filter="file">📁 File</button>
+                    <button class="filter-tab" data-filter="image">🖼️ Gambar</button>
+                </div>
+            </section>
+
+            <!-- Items List Section -->
+            <section class="items-section">
+                <div id="itemsList" class="items-list">
+                    <div class="empty-state">
+                        <p>📭 Belum ada item yang disimpan</p>
+                        <small>Mulai dengan paste teks atau upload file</small>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Pengaturan</h2>
+                <button class="modal-close" id="closeSettingsBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="apiUrl">API URL (untuk sinkronisasi TiDB):</label>
+                    <input 
+                        type="text" 
+                        id="apiUrl" 
+                        class="setting-input" 
+                        placeholder="https://your-api.herokuapp.com">
+                </div>
+                <div class="setting-group">
+                    <label for="apiKey">API Key:</label>
+                    <input 
+                        type="password" 
+                        id="apiKey" 
+                        class="setting-input" 
+                        placeholder="Masukkan API key Anda">
+                </div>
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="autoSync">
+                        <span>Auto-sinkronisasi setiap 5 menit</span>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="testConnectionBtn">
+                        🧪 Test Koneksi
+                    </button>
+                    <button class="btn btn-danger" id="clearDataBtn">
+                        🗑️ Hapus Semua Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Preview Modal -->
+    <div id="previewModal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="previewTitle">Preview</h2>
+                <button class="modal-close" id="closePreviewBtn">✕</button>
+            </div>
+            <div class="modal-body" id="previewBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
